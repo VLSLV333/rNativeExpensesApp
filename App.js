@@ -33,13 +33,32 @@ function StackNavigatorRecent() {
         component={RecentExpensesScreen}
         options={{
           headerRight: ({ tintColor }) => (
-            <OpenAddScreenButton size={24} color={tintColor} />
+            <OpenAddScreenButton size={24} color={tintColor} where="AddExpensesStackRecent"/>
           ),
           gestureDirection: "vertical",
         }}
       />
-      <Stack.Screen name="AddExpensesStack" component={AddExpenseScreen} />
-      <Stack.Screen name="EditExpensesStack" component={EditExpenseScreen} />
+      <Stack.Screen name="AddExpensesStackRecent" component={AddExpenseScreen} />
+      <Stack.Screen name="EditExpensesStackRecent" component={EditExpenseScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function StackNavigatorAll() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="AllExpensesStack"
+        component={AllExpensesScreen}
+        options={{
+          headerRight: ({ tintColor }) => (
+            <OpenAddScreenButton size={24} color={tintColor} where="AddExpensesStackAll" />
+          ),
+          gestureDirection: "vertical",
+        }}
+      />
+      <Stack.Screen name="AddExpensesStackAll" component={AddExpenseScreen} />
+      <Stack.Screen name="EditExpensesStackAll" component={EditExpenseScreen} />
     </Stack.Navigator>
   );
 }
@@ -77,7 +96,7 @@ export default function App() {
             />
             <BottomTab.Screen
               name="AllExpenses"
-              component={AllExpensesScreen}
+              component={StackNavigatorAll}
               options={{
                 title: "All Expenses",
                 tabBarIcon: ({ color, size }) => {

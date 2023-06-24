@@ -1,14 +1,14 @@
-import { FlatList, View, Text, StyleSheet, TextInput } from "react-native";
+import { FlatList, View, Text, StyleSheet, TextInput } from 'react-native';
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import { editExpense, removeExpense } from "../../store/expensesSlice";
+import { editExpense, removeExpense } from '../../store/expensesSlice';
 
-import MyButton from "../../components/UI/MyButton";
+import MyButton from '../../components/UI/MyButton';
 
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function EditExpenseScreen({ route, navigation }) {
   const dispatch = useDispatch();
@@ -22,27 +22,13 @@ export default function EditExpenseScreen({ route, navigation }) {
   //   )[0];
   const elementToEdit = useSelector((state) => state.expensesSlice).filter(
     (item) => item.id === expenseId
-  );
-
-  //   if (elementToEdit === undefined) {
-  //     return (
-  //       <View>
-  //         <Text style={{ color: "black" }}>
-  //           Please, create your first expense
-  //         </Text>
-  //       </View>
-  //     );
-  //   }
+  )[0];
 
   const [pickedDate, setPickedDate] = useState(
-    elementToEdit[0]?.date ? new Date(elementToEdit[0].date) : new Date()
+    new Date(elementToEdit?.date) || new Date()
   );
-  const [titleInput, setTitleInput] = useState(
-    elementToEdit[0]?.title ? elementToEdit[0].title : ""
-  );
-  const [cost, setCost] = useState(
-    elementToEdit[0]?.amount ? elementToEdit[0].amount : ""
-  );
+  const [titleInput, setTitleInput] = useState(elementToEdit?.title || '');
+  const [cost, setCost] = useState(elementToEdit?.amount || '');
 
   const setDate = (event, date) => {
     // const {
@@ -69,8 +55,8 @@ export default function EditExpenseScreen({ route, navigation }) {
       })
     );
     setPickedDate(new Date());
-    setTitleInput("");
-    setCost("");
+    setTitleInput('');
+    setCost('');
     navigation.goBack();
   };
 
@@ -80,7 +66,7 @@ export default function EditExpenseScreen({ route, navigation }) {
 
   const removeButtonHandler = () => {
     dispatch(removeExpense(expenseId));
-    // // navigation.goBack();
+    navigation.goBack();
     // navigation.navigate("AllExpenses");
   };
 
@@ -88,16 +74,16 @@ export default function EditExpenseScreen({ route, navigation }) {
     <View style={{ paddingHorizontal: 10 }}>
       <View
         style={{
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexDirection: "row",
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexDirection: 'row',
         }}
       >
         <Text>Provide spend title EditExpense</Text>
-        <View style={{ alignItems: "flex-start", justifyContent: "center" }}>
+        <View style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
           <TextInput
             placeholder="введіть назву витрати"
-            style={{ textAlign: "left", width: "100%", height: 30 }}
+            style={{ textAlign: 'left', width: '100%', height: 30 }}
             value={titleInput}
             onChangeText={(txt) => setTitleInput(txt)}
           />
@@ -105,16 +91,16 @@ export default function EditExpenseScreen({ route, navigation }) {
       </View>
       <View
         style={{
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexDirection: "row",
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexDirection: 'row',
         }}
       >
         <Text>Provide amount spend</Text>
-        <View style={{ alignItems: "flex-start", justifyContent: "center" }}>
+        <View style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
           <TextInput
             placeholder="введіть суму витрати"
-            style={{ textAlign: "left", width: "100%", height: 30 }}
+            style={{ textAlign: 'left', width: '100%', height: 30 }}
             keyboardType="numeric"
             value={cost}
             onChangeText={(txt) => setCost(txt)}
@@ -123,25 +109,25 @@ export default function EditExpenseScreen({ route, navigation }) {
       </View>
       <View
         style={{
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexDirection: "row",
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexDirection: 'row',
         }}
       >
         <Text>Select spend date</Text>
         <DateTimePicker value={pickedDate} onChange={setDate} />
       </View>
       <View style={styles.btnsContainer}>
-        <MyButton onPress={cancelButtonHandler} txt={"Cancel"} clr={"blue"} />
+        <MyButton onPress={cancelButtonHandler} txt={'Cancel'} clr={'blue'} />
         <MyButton
           onPress={updateButtonHandler}
-          txt={"Update"}
-          clr={"#3e09ba"}
+          txt={'Update'}
+          clr={'#3e09ba'}
         />
         <MyButton
           onPress={removeButtonHandler}
-          txt={"Delete"}
-          clr={"#3e09ba"}
+          txt={'Delete'}
+          clr={'#3e09ba'}
         />
       </View>
     </View>

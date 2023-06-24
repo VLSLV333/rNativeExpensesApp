@@ -4,11 +4,11 @@ import { FlatList, View, Text, StyleSheet, Pressable } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
 
-export default function OpenAddScreenButton({ color, size }) {
+export default function OpenAddScreenButton({ color, size, where }) {
   const navigation = useNavigation();
 
   const pressHandler = () => {
-    navigation.navigate("AddExpensesStack");
+    navigation.navigate(where);
   };
 
   return (
